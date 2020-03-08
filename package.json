@@ -1,6 +1,7 @@
 {
   "name": "eslint-plugin-t",
   "version": "1.1.0",
+  "main": "./src/index.js",
   "scripts": {
     "format": "prettier --write \"src/**/*.js\"",
     "format:check": "prettier --check \"src/**/*.js\"",
