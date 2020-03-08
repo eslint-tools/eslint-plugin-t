@@ -4,11 +4,21 @@
   "scripts": {
     "format": "prettier --write \"src/**/*.js\"",
     "format:check": "prettier --check \"src/**/*.js\"",
-    "test": "yarn format:check"
+    "lint": "eslint --max-warnings 0 \"src/**/*.js\"",
+    "test": "yarn format:check && yarn lint"
   },
   "dependencies": {},
   "devDependencies": {
-    "prettier": "^1.19.1"
+    "eslint": "^6.8.0",
+    "eslint-config-kodefox": "^0.2.1",
+    "prettier": "^1.19.1",
+    "typescript": "^3.8.3"
+  },
+  "eslintConfig": {
+    "extends": "kodefox",
+    "rules": {
+      "@typescript-eslint/no-var-requires": 0
+    }
   },
   "prettier": {
     "singleQuote": true,
