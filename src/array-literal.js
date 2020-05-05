@@ -23,11 +23,20 @@ module.exports = {
             return;
           }
           let arg = args[0];
-          if (!isStringLiteral(arg)) {
+          if (arg.type !== 'ArrayExpression' || arg.elements.length !== 2) {
             context.report({
               node: arg,
-              message: 'First argument to t() must be a string literal.',
+              message:
+                'First argument to t() must be an array literal of length 2.',
             });
+          }
+          for (let node of arg.elements) {
+            if (!isStringLiteral(node)) {
+              context.report({
+                node,
+                message: 'Array element must be a string literal.',
+              });
+            }
           }
         }
       },
