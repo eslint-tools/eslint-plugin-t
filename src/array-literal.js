@@ -29,6 +29,7 @@ module.exports = {
               message:
                 'First argument to t() must be an array literal of length 2.',
             });
+            return;
           }
           for (let node of arg.elements) {
             if (!isStringLiteral(node)) {
