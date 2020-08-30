@@ -1,3 +1,4 @@
+const isGlobal = require('./helpers/isGlobal');
 const isStringLiteral = require('./helpers/isStringLiteral');
 
 module.exports = {
@@ -5,20 +6,12 @@ module.exports = {
     return {
       CallExpression(node) {
         let { callee } = node;
-        if (callee.type === 'Identifier' && callee.name === 't') {
-          let scope = context.getScope();
-          while (scope && scope.type !== 'global') {
-            if (scope.set.has('t')) {
-              // t is not global
-              return;
-            }
-            scope = scope.upper;
-          }
+        let checkCallSignature = (expr) => {
           let args = node.arguments;
           if (!args || args.length === 0) {
             context.report({
               node,
-              message: 't() must take at least one argument.',
+              message: `${expr} must take at least one argument.`,
             });
             return;
           }
@@ -26,8 +19,7 @@ module.exports = {
           if (arg.type !== 'ArrayExpression' || arg.elements.length !== 2) {
             context.report({
               node: arg,
-              message:
-                'First argument to t() must be an array literal of length 2.',
+              message: `First argument to ${expr} must be an array literal of length 2.`,
             });
             return;
           }
@@ -38,6 +30,21 @@ module.exports = {
                 message: 'Array element must be a string literal.',
               });
             }
+          }
+        };
+        if (callee.type === 'Identifier' && callee.name === 't') {
+          if (isGlobal(context, 't')) {
+            checkCallSignature('t()');
+          }
+        } else if (
+          callee.type === 'MemberExpression' &&
+          callee.object.type === 'Identifier' &&
+          callee.object.name === 't' &&
+          callee.property.type === 'Identifier' &&
+          callee.property.name === 'frag'
+        ) {
+          if (isGlobal(context, 't')) {
+            checkCallSignature('t.frag()');
           }
         }
       },
