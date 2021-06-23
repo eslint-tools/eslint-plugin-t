@@ -1,6 +1,6 @@
 {
   "name": "eslint-plugin-t",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "repository": "github:eslift/eslint-plugin-t",
   "main": "./src/index.js",
   "scripts": {
