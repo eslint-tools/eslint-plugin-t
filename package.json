@@ -26,5 +26,6 @@
     "trailingComma": "all",
     "arrowParens": "always"
   },
+  "repository": "github:eslint-tools/eslint-plugin-t",
   "license": "ISC"
 }
