@@ -1,5 +1,5 @@
-const isGlobal = require('./helpers/isGlobal');
-const isStringLiteral = require('./helpers/isStringLiteral');
+const isGlobal = require('../helpers/isGlobal');
+const isStringLiteral = require('../helpers/isStringLiteral');
 
 module.exports = {
   create: (context) => {

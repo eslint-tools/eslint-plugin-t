@@ -1,4 +1,4 @@
-const stringLiteralRule = require('./string-literal');
+const stringLiteralRule = require('./rules/string-literal');
 
 const rules = {
   'string-literal': stringLiteralRule,
