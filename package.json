@@ -1,25 +1,31 @@
 {
   "name": "eslint-plugin-t",
   "version": "1.5.1",
-  "main": "./src/index.js",
+  "main": "./lib/index.js",
+  "files": [
+    "lib"
+  ],
   "scripts": {
-    "format": "prettier --write \"src/**/*.js\"",
-    "format:check": "prettier --check \"src/**/*.js\"",
-    "lint": "eslint --max-warnings 0 \"src/**/*.js\"",
-    "test": "yarn format:check && yarn lint"
+    "lint": "eslint --max-warnings 0 \"src/**/*.ts\"",
+    "typecheck": "tsc --noEmit",
+    "format": "prettier --write src",
+    "format:lib": "prettier --write lib --ignore-path /dev/null",
+    "format:check": "prettier --check src",
+    "test": "yarn lint && yarn typecheck && yarn format:check",
+    "clean": "rm -rf lib",
+    "build": "yarn clean && tsc && yarn format:lib",
+    "prepublishOnly": "yarn build"
   },
   "dependencies": {},
   "devDependencies": {
+    "@types/eslint": "^8.4.2",
     "eslint": "^8.17.0",
     "eslint-config-xt": "^1.5.0",
     "prettier": "^2.6.2",
     "typescript": "^4.7.3"
   },
   "eslintConfig": {
-    "extends": "xt",
-    "rules": {
-      "@typescript-eslint/no-var-requires": 0
-    }
+    "extends": "xt"
   },
   "prettier": {
     "singleQuote": true,

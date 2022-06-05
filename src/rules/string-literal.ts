@@ -1,14 +1,16 @@
-const isGlobal = require('../helpers/isGlobal');
-const isStringLiteral = require('../helpers/isStringLiteral');
+import type { Rule } from 'eslint';
 
-module.exports = {
+import isGlobal from '../helpers/isGlobal';
+import isStringLiteral from '../helpers/isStringLiteral';
+
+const rule: Rule.RuleModule = {
   create: (context) => {
     return {
       CallExpression(node) {
         let { callee } = node;
-        let checkCallSignature = (expr) => {
+        let checkCallSignature = (expr: string) => {
           let args = node.arguments;
-          if (!args || args.length === 0) {
+          if (!args[0]) {
             context.report({
               node,
               message: `${expr} must take at least one argument.`,
@@ -42,3 +44,5 @@ module.exports = {
     };
   },
 };
+
+export default rule;
