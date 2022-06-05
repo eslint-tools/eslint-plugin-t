@@ -2,8 +2,8 @@
   "compilerOptions": {
     "target": "es2019",
     "lib": ["es2019"],
-    "module": "commonjs",
-    "outDir": "lib",
+    "module": "esnext",
+    "moduleResolution": "node",
     "skipLibCheck": true,
     "strict": true,
     "noUncheckedIndexedAccess": true,

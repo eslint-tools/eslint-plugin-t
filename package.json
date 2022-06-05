@@ -9,19 +9,21 @@
     "lint": "eslint --max-warnings 0 \"src/**/*.ts\"",
     "typecheck": "tsc --noEmit",
     "format": "prettier --write src",
-    "format:lib": "prettier --write lib --ignore-path /dev/null",
+    "format:lib": "prettier --write lib",
     "format:check": "prettier --check src",
     "test": "yarn lint && yarn typecheck && yarn format:check",
     "clean": "rm -rf lib",
-    "build": "yarn clean && tsc && yarn format:lib",
+    "build": "yarn clean && rollup -c && yarn format:lib",
     "prepublishOnly": "yarn build"
   },
   "dependencies": {},
   "devDependencies": {
+    "@rollup/plugin-typescript": "^8.3.2",
     "@types/eslint": "^8.4.2",
     "eslint": "^8.17.0",
     "eslint-config-xt": "^1.5.0",
     "prettier": "^2.6.2",
+    "rollup": "^2.75.5",
     "typescript": "^4.7.3"
   },
   "eslintConfig": {
