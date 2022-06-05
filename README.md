@@ -26,11 +26,11 @@ This plugin contains lint rules related to internationalization, particularly fo
 
 ## Rules
 
-Currently there's only one rule.
+There's currently just one lint rule in this package.
 
 **string-literal**
 
-Ensures that only a string literal can be passed as the first argument to `t()`.
+This rule enforces that the first argument to `t()` is a string literal. This is useful if you intend to [statically extract](https://www.i18next.com/overview/plugins-and-utils#extraction-tools) language strings because static tooling [can't evaluate expressions](https://github.com/i18next/i18next-parser#caveats).
 
 Example:
 
@@ -39,5 +39,5 @@ Example:
 alert(t('Hello World!'));
 
 // Incorrect usage (raises lint warning)
-alert(t('Hello' + name + '!'));
+alert(t('Hello ' + Math.random().toString()));
 ```
