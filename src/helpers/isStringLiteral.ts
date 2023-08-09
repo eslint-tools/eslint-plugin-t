@@ -1,6 +1,6 @@
 import type { Node } from 'estree';
 
-export default function isStringLiteral(node: Node) {
+export function isStringLiteral(node: Node) {
   // Not a literal
   if (node.type !== 'Literal' && node.type !== 'TemplateLiteral') {
     return false;
