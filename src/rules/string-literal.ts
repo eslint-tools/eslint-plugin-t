@@ -4,7 +4,27 @@ import isGlobal from '../helpers/isGlobal';
 import isStringLiteral from '../helpers/isStringLiteral';
 
 const rule: Rule.RuleModule = {
+  meta: {
+    schema: [
+      {
+        type: 'object',
+        properties: {
+          propNames: {
+            type: 'array',
+            items: {
+              type: 'string',
+            },
+          },
+        },
+        additionalProperties: false,
+      },
+    ],
+  },
+
   create: (context) => {
+    const options = context.options[0] || {};
+    const propNames: Array<string> = options.propNames || ['jsx', 'frag'];
+
     return {
       CallExpression(node) {
         let { callee } = node;
@@ -25,19 +45,22 @@ const rule: Rule.RuleModule = {
             });
           }
         };
+        if (!isGlobal(context, 't')) {
+          return;
+        }
         if (callee.type === 'Identifier' && callee.name === 't') {
-          if (isGlobal(context, 't')) {
-            checkCallSignature('t()');
-          }
-        } else if (
-          callee.type === 'MemberExpression' &&
-          callee.object.type === 'Identifier' &&
-          callee.object.name === 't' &&
-          callee.property.type === 'Identifier' &&
-          callee.property.name === 'frag'
-        ) {
-          if (isGlobal(context, 't')) {
-            checkCallSignature('t.frag()');
+          checkCallSignature('t()');
+        } else {
+          for (const propName of propNames) {
+            if (
+              callee.type === 'MemberExpression' &&
+              callee.object.type === 'Identifier' &&
+              callee.object.name === 't' &&
+              callee.property.type === 'Identifier' &&
+              callee.property.name === propName
+            ) {
+              checkCallSignature(`t.${propName}()`);
+            }
           }
         }
       },
